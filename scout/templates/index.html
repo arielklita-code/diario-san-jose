@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diario San José</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --crema: #f5f0e8;
+      --crema-dark: #ede8dc;
+      --negro: #1a1a1a;
+      --verde: #2E7D32;
+      --verde-dark: #1B5E20;
+      --verde-light: #E8F5E9;
+      --dorado: #F9A825;
+      --gris: #555;
+      --gris-medio: #888;
+      --gris-claro: #ddd;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Source Sans 3', system-ui, sans-serif;
+      --lora: 'Lora', Georgia, serif;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    body {
+      background: var(--crema);
+      color: var(--negro);
+      font-family: var(--sans);
+    }
+
+    /* ══════════════════════════════════════
+       NAVBAR — estilo San Patricio
+    ══════════════════════════════════════ */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(245, 240, 232, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 66px;
+      padding: 0 2rem;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(245, 240, 232, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--negro);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+
+    .hero {
+      position: relative;
+      height: 65vh;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
+        url('https://images.unsplash.com/photo-1508873699372-7aeab60b44ab');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://www.facebook.com/gruposcoutalvear/');
+      opacity: 0.15;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      background: var(--negro);
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .btn-hero:hover {
+      background: var(--gris);
+    }
+
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--negro);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--crema);
+    }
+
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .nav-logo-text span:first-child {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--gris-medio);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-logo-text span:last-child {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--negro);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+    }
+
+    .nav-links button {
+      background: none;
+      border: none;
+      border-right: 1px solid var(--gris-claro);
+      padding: 0 18px;
+      height: 62px;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gris);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .nav-links button:first-child {
+      border-left: 1px solid var(--gris-claro);
+    }
+
+    .nav-links button:hover {
+      background: var(--crema-dark);
+      color: var(--negro);
+    }
+
+    .nav-links button.active {
+      background: var(--negro);
+      color: var(--crema);
+    }
+
+    .nav-btn-nueva {
+      margin-left: auto;
+      background: var(--verde);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .nav-btn-nueva:hover {
+      background: var(--verde-dark);
+    }
+
+    /* ══════════════════════════════════════
+       TOPBAR de diario
+    ══════════════════════════════════════ */
+    .diario-topbar {
+      background: var(--crema);
+      border-bottom: 1px solid var(--gris-claro);
+      padding: 5px 2rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--gris-medio);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════
+       MASTHEAD
+    ══════════════════════════════════════ */
+    .masthead {
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-align: center;
+      padding: 1.5rem 2rem 1rem;
+      border-bottom: 3px double var(--negro);
+      background: var(--crema);
+    }
+
+    .masthead h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: var(--negro);
+    }
+
+    .masthead .lema {
+      font-family: var(--lora);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--gris-medio);
+      margin-top: 0.4rem;
+    }
+
+    /* ══════════════════════════════════════
+       BARRA DE SECCIONES / RAMAS
+    ══════════════════════════════════════ */
+    .rama-nav {
+      border-top: 1px solid var(--negro);
+      border-bottom: 1px solid var(--negro);
+      background: var(--crema);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .rama-nav button {
+      background: none;
+      border: none;
+      border-right: 1px solid var(--gris-claro);
+      padding: 9px 20px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--negro);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.15s;
+    }
+
+    .rama-nav button:first-child {
+      border-left: 1px solid var(--gris-claro);
+    }
+
+    .rama-nav button:hover {
+      background: var(--crema-dark);
+    }
+
+    .rama-nav button.active {
+      background: var(--negro);
+      color: #fff;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════
+       SECCIONES (tabs)
+    ══════════════════════════════════════ */
+    .seccion {
+      display: none;
+    }
+
+    .seccion.visible {
+      display: block;
+    }
+
+    /* ══════════════════════════════════════
+       CRÓNICAS — layout editorial
+    ══════════════════════════════════════ */
+    .cronicas-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      gap: 2rem;
+    }
+
+    .seccion-label {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris);
+      border-top: 2px solid var(--negro);
+      border-bottom: 1px solid var(--gris-claro);
+      padding: 6px 0;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .articulo {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 190px;
+      gap: 1.25rem;
+      align-items: start;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+    }
+
+    .articulo:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .articulo.sin-img {
+      grid-template-columns: 1fr;
+    }
+
+    .articulo-badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .badge-Manada {
+      background: #E65100;
+    }
+
+    .badge-Tropa {
+      background: #2E7D32;
+    }
+
+    .badge-Raiders {
+      background: #6A1B9A;
+    }
+
+    .badge-Clan {
+      background: #B71C1C;
+    }
+
+    .badge-default {
+      background: #37474F;
+    }
+
+    .articulo-fecha {
+      font-size: 0.72rem;
+      color: var(--gris-medio);
+      margin-left: 8px;
+    }
+
+    .articulo-titulo {
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--negro);
+      margin-bottom: 8px;
+      cursor: default;
+    }
+
+    .articulo-texto {
+      font-family: var(--lora);
+      font-size: 0.88rem;
+      color: var(--gris);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+
+    .articulo-texto p::first-letter {
+      float: left;
+      font-family: var(--serif);
+      font-size: 3.2rem;
+      font-weight: 900;
+      line-height: 0.8;
+      margin: 4px 7px 0 0;
+      color: var(--negro);
+    }
+
+    .articulo-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--gris-medio);
+    }
+
+    .articulo-autor {
+      font-style: italic;
+    }
+
+    .btn-like {
+      background: none;
+      border: 1px solid var(--gris-claro);
+      padding: 3px 12px;
+      font-size: 0.78rem;
+      color: var(--gris-medio);
+      cursor: pointer;
+      font-family: var(--sans);
+      transition: all 0.15s;
+      border-radius: 3px;
+    }
+
+    .btn-like:hover {
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+
+    .btn-like.liked {
+      border-color: #c0392b;
+      color: #c0392b;
+      background: #fff5f5;
+    }
+
+    .art-img {
+      width: 100%;
+      height: 145px;
+      object-fit: cover;
+      border: 1px solid var(--gris-claro);
+    }
+
+    .art-img-placeholder {
+      width: 100%;
+      height: 145px;
+      background: var(--crema-dark);
+      border: 1px solid var(--gris-claro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: #ccc;
+    }
+
+    #estado {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gris-medio);
+      font-style: italic;
+      font-family: var(--lora);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      border-left: 1px solid var(--gris-claro);
+      padding-left: 1.5rem;
+    }
+
+    .sb-bloque {
+      margin-bottom: 1.75rem;
+      border-top: 2px solid var(--negro);
+      padding-top: 0.75rem;
+    }
+
+    .sb-bloque h3 {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .mision-box {
+      background: var(--negro);
+      color: #ddd;
+      padding: 1rem;
+      font-family: var(--lora);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      border-radius: 2px;
+    }
+
+    .mision-box strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .sb-quote {
+      border-left: 3px solid var(--negro);
+      padding-left: 0.75rem;
+      font-family: var(--lora);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--gris);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .sb-quote cite {
+      display: block;
+      font-style: normal;
+      font-size: 0.72rem;
+      color: var(--gris-medio);
+      margin-top: 4px;
+      font-family: var(--sans);
+    }
+
+    /* ══════════════════════════════════════
+       GALERÍA
+    ══════════════════════════════════════ */
+    .galeria-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2rem;
+    }
+
+    .galeria-sidebar h3 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .anios-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .anio-btn {
+      background: var(--crema-dark);
+      border: 1px solid var(--gris-claro);
+      border-radius: 20px;
+      padding: 5px 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--negro);
+      cursor: pointer;
+      font-family: var(--sans);
+      text-align: center;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .anio-btn::after {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--verde);
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .anio-btn.active {
+      background: var(--verde);
+      color: #fff;
+      border-color: var(--verde);
+    }
+
+    .anio-btn.active::after {
+      background: #fff;
+    }
+
+    .anio-btn:hover:not(.active) {
+      background: var(--verde-light);
+      border-color: var(--verde);
+    }
+
+    .galeria-main h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 1.25rem;
+      border-top: 2px solid var(--negro);
+      padding-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .galeria-main h2 span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gris-medio);
+      font-family: var(--sans);
+    }
+
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .galeria-card {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+    }
+
+    .galeria-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .galeria-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .galeria-card-body {
+      padding: 0.75rem;
+    }
+
+    .galeria-card-title {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 4px;
+    }
+
+    .galeria-card-meta {
+      font-size: 0.75rem;
+      color: var(--gris-medio);
+      font-family: var(--sans);
+    }
+
+    .galeria-upload-area {
+      border: 2px dashed var(--gris-claro);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s;
+      background: var(--crema-dark);
+    }
+
+    .galeria-upload-area:hover {
+      border-color: var(--verde);
+    }
+
+    .galeria-upload-area p {
+      font-size: 0.85rem;
+      color: var(--gris-medio);
+      font-family: var(--sans);
+      margin-top: 0.5rem;
+    }
+
+    .galeria-vacia {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gris-medio);
+      font-style: italic;
+      font-family: var(--lora);
+    }
+
+    /* ══════════════════════════════════════
+       CALENDARIO
+    ══════════════════════════════════════ */
+    .cal-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem;
+    }
+
+    .cal-titulo {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--negro);
+      border-top: 2px solid var(--negro);
+      border-bottom: 1px solid var(--gris-claro);
+      padding: 6px 0;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cal-titulo small {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris-medio);
+    }
+
+    .proximo-evento {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-left: 4px solid var(--verde);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .proximo-evento .pe-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 4px;
+      font-family: var(--sans);
+    }
+
+    .proximo-evento .pe-titulo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--negro);
+    }
+
+    .proximo-evento .pe-meta {
+      font-size: 0.8rem;
+      color: var(--gris-medio);
+      font-family: var(--sans);
+      margin-top: 4px;
+    }
+
+    .pe-dias {
+      text-align: center;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .pe-dias .num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--verde);
+      line-height: 1;
+    }
+
+    .pe-dias .label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris-medio);
+      font-family: var(--sans);
+    }
+
+    .cal-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cal-evento {
+      background: #fff;
+      border: 1px solid var(--gris-claro);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 1.2rem;
+      align-items: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+    }
+
+    .cal-evento:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .cal-fecha-box {
+      background: var(--verde-light);
+      border-radius: 6px;
+      text-align: center;
+      padding: 6px 4px;
+    }
+
+    .cal-fecha-box .dia {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--verde-dark);
+      line-height: 1;
+    }
+
+    .cal-fecha-box .mes {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--verde);
+      font-family: var(--sans);
+    }
+
+    .cal-ev-titulo {
+      font-family: var(--lora);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--negro);
+    }
+
+    .cal-ev-meta {
+      font-size: 0.78rem;
+      color: var(--gris-medio);
+      font-family: var(--sans);
+      margin-top: 3px;
+    }
+
+    .cal-ev-rama {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-family: var(--sans);
+    }
+
+    .btn-add-evento {
+      background: var(--verde);
+      color: #fff;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--sans);
+      letter-spacing: 0.03em;
+      transition: background 0.15s;
+    }
+
+    .btn-add-evento:hover {
+      background: var(--verde-dark);
+    }
+
+    /* ══════════════════════════════════════
+       MODAL
+    ══════════════════════════════════════ */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 400;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--crema);
+      border: 1px solid var(--negro);
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modal h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--negro);
+      border-bottom: 2px double var(--negro);
+      padding-bottom: 0.75rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gris);
+      font-family: var(--sans);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1px solid var(--gris-claro);
+      background: #fff;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      color: var(--negro);
+      font-family: var(--lora);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--negro);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 1rem;
+    }
+
+    .btn-cancelar {
+      background: none;
+      border: 1px solid var(--gris-claro);
+      color: var(--gris);
+      padding: 8px 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--sans);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .btn-publicar {
+      background: var(--negro);
+      border: none;
+      color: #fff;
+      padding: 8px 22px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--sans);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: background 0.15s;
+    }
+
+    .btn-publicar:hover {
+      background: #333;
+    }
+
+    .btn-publicar:disabled {
+      background: var(--gris-medio);
+      cursor: not-allowed;
+    }
+
+    /* MODAL EVENTO */
+    .modal-evento {
+      display: none;
+    }
+
+    .modal-evento.open {
+      display: flex;
+    }
+
+    /* ══════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--negro);
+      color: #fff;
+      padding: 10px 24px;
+      font-size: 0.85rem;
+      font-family: var(--sans);
+      transition: transform 0.3s;
+      z-index: 500;
+      border-radius: 4px;
+    }
+
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--negro);
+      color: #888;
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.78rem;
+      font-family: var(--sans);
+      margin-top: 3rem;
+    }
+
+    footer strong {
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 750px) {
+
+      /* NAVBAR */
+      .navbar {
+        padding: 0 1.5rem;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      .nav-links {
+        display: none;
+        /* oculto por defecto en movil */
+        position: absolute;
+        top: 66px;
+        left: -1.5rem;
+        width: calc(100% + 3rem);
+        background: rgba(245, 240, 232, 0.98);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid var(--gris-claro);
+      }
+
+      .nav-links.show {
+        display: flex;
+        animation: slideDown 0.3s ease forwards;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .nav-links button {
+        width: 100%;
+        border: none !important;
+        height: 50px;
+        font-size: 0.9rem;
+      }
+
+      .nav-btn-nueva {
+        width: 90%;
+        margin: 1rem auto;
+      }
+
+      /* HERO */
+      .hero {
+        height: 100vh;
+        padding: 1vh;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .btn-hero {
+        width: 100%;
+      }
+
+
+
+      .cronicas-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .articulo {
+        grid-template-columns: 1fr;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        border-left: none;
+        border-top: 2px solid var(--gris-claro);
+        padding-top: 1rem;
+      }
+
+      /* GALERÍA */
+      .galeria-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .galeria-sidebar {
+        display: none;
+      }
+
+      .galeria-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* CALENDARIO */
+      .cal-evento {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      /* MASTHEAD */
+      .masthead h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* ══════════════════════════════════════
+       ANIMACIONES Y MASTHEAD DINÁMICO
+    ══════════════════════════════════════ */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .seccion.visible {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .articulo,
+    .galeria-card,
+    .cal-evento {
+      animation: fadeIn 0.4s ease-out both;
+    }
+
+    .masthead {
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: all 0.3s ease;
+    }
+
+    .masthead.rama-Manada {
+      border-bottom-color: #E65100;
+    }
+
+    .masthead.rama-Manada h1 {
+      color: #E65100;
+    }
+
+    .masthead.rama-Tropa {
+      border-bottom-color: #2E7D32;
+    }
+
+    .masthead.rama-Tropa h1 {
+      color: #2E7D32;
+    }
+
+    .masthead.rama-Raiders {
+      border-bottom-color: #6A1B9A;
+    }
+
+    .masthead.rama-Raiders h1 {
+      color: #6A1B9A;
+    }
+
+    .masthead.rama-Clan {
+      border-bottom-color: #B71C1C;
+    }
+
+    .masthead.rama-Clan h1 {
+      color: #B71C1C;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="navbar" id="navbar-main">
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-icon">&#9884;</div>
+      <div class="nav-logo-text">
+        <span>Grupo Scout</span>
+        <span>San José</span>
+      </div>
+    </a>
+
+    <div class="menu-toggle" id="mobile-menu-btn" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="nav-links" id="nav-links-menu">
+      <button class="active" data-seccion="cronicas" onclick="toggleMenu(true)">Inicio</button>
+      <button data-seccion="galeria" onclick="toggleMenu(true)">Galería</button>
+      <button data-seccion="calendario" onclick="toggleMenu(true)">Calendario</button>
+      <button class="nav-btn-nueva" id="btn-nueva">Registrarse</button>
+      <button class="nav-btn-nueva" id="btn-perfil" style="display:none;">Mi Perfil</button>
+      <button class="nav-btn-nueva" id="btn-admin-panel" style="display:none; background: #1565C0;">Ver usuarios</button>
+      <button class="nav-btn-nueva" id="btn-logout" style="display:none; background: #B71C1C;">Cerrar Sesión</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1>Scout San José</h1>
+      <p>Descubre nuestras historias, galería y eventos.</p>
+
+      <div class="hero-buttons">
+        <button class="btn-hero" onclick="irSeccion('cronicas')">Inicio</button>
+        <button class="btn-hero" onclick="irSeccion('galeria')">Galería</button>
+        <button class="btn-hero" onclick="irSeccion('calendario')">Calendario</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TOPBAR ═══════════════ -->
+  <div class="diario-topbar">
+    <span id="edicion-num">Edición Digital N° 1</span>
+    <span>Siempre Listo Para Servir</span>
+    <span id="fecha-hoy"></span>
+  </div>
+
+  <!-- ═══════════════ MASTHEAD ═══════════════ -->
+  <div class="masthead" id="masthead">
+    <h1>Diario San José</h1>
+    <div class="lema">La voz del Movimiento Scout</div>
+  </div>
+
+  <!-- ═══════════════ RAMAS NAV ═══════════════ -->
+  <div class="rama-nav" id="rama-nav">
+    <button class="active" data-rama="Todas">Portada</button>
+    <button data-rama="Manada"><span class="dot" style="background:#E65100"></span>Manada</button>
+    <button data-rama="Tropa"><span class="dot" style="background:#2E7D32"></span>Tropa</button>
+    <button data-rama="Raiders"><span class="dot" style="background:#6A1B9A"></span>Raiders</button>
+    <button data-rama="Clan"><span class="dot" style="background:#B71C1C"></span>Clan</button>
+  </div>
+
+  <!-- ═══════════════ SECCIÓN CRÓNICAS ═══════════════ -->
+  <section class="seccion visible" id="sec-cronicas">
+    <div class="cronicas-wrap">
+      <main>
+        <div class="seccion-label">
+          <span>&#128218; Noticias del Grupo</span>
+        </div>
+        <div id="estado">Cargando crónicas...</div>
+        <div id="articulos"></div>
+      </main>
+      <aside class="sidebar">
+        <div id="sidebar-comunicados"></div>
+        <button id="btn-editar-comunicados" class="nav-btn-nueva" style="display:none; margin-top: 1rem; width: 100%;">Editar comunicados</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SECCIÓN GALERÍA ═══════════════ -->
+  <section class="seccion" id="sec-galeria">
+    <div class="galeria-wrap">
+      <aside class="galeria-sidebar">
+        <h3>&#128197; Explorar por año</h3>
+        <div class="anios-grid" id="anios-grid"></div>
+      </aside>
+      <div class="galeria-main">
+        <h2>Álbumes de <span id="galeria-anio-titulo">2026</span> <span id="galeria-count"></span></h2>
+        <div class="galeria-upload-area" id="galeria-upload"
+          onclick="
+            if (!usuarioActual || !usuarioActual.is_admin) {
+              mostrarToast('Solo administradores pueden subir fotos');
+              return;
+            }
+            document.getElementById('f-galeria-file').click();
+          ">
+          <div style="font-size:2rem;color:#ccc">&#43;</div>
+          <p id="galeria-texto">Subir nueva foto al álbum</p>
+          <input type="file" id="f-galeria-file" accept="image/*" style="display:none" multiple />
+        </div>
+        <br />
+        <div class="galeria-grid" id="galeria-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SECCIÓN CALENDARIO ═══════════════ -->
+  <section class="seccion" id="sec-calendario">
+    <div class="cal-wrap">
+      <div class="cal-titulo">
+        <span>&#128197; Calendario Scout 2026</span>
+        <button class="btn-add-evento" id="btn-add-evento">+ Agregar evento</button>
+      </div>
+      <div id="proximo-evento-box"></div>
+      <div class="cal-lista" id="cal-lista">
+        <p style="text-align:center;font-style:italic;color:var(--gris-medio);font-family:var(--lora);padding:2rem">No
+          hay eventos cargados aún.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MODAL REGISTRO ═══════════════ -->
+  <div class="overlay" id="overlay-registro">
+    <div class="modal" style="max-width: 450px;">
+      <h2>Registrarse</h2>
+      <div class="form-group">
+        <label for="reg-username">Nombre de Usuario</label>
+        <input id="reg-username" type="text" placeholder="Tu nombre de usuario..." />
+      </div>
+      <div class="form-group">
+        <label for="reg-password">Contraseña (opcional)</label>
+        <input id="reg-password" type="password" placeholder="Dejá vacío si no querés permisos de admin..." />
+        <small style="color: var(--gris-medio); font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+          ℹ️ Con contraseña: Podrás publicar crónicas, fotos y noticias (admin)<br/>
+          Sin contraseña: Te registrarás como usuario pero sin permisos de publicación
+        </small>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" id="btn-cancelar-registro">Cancelar</button>
+        <button class="btn-publicar" id="btn-registrarse">Registrarse</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODAL PERFIL ═══════════════ -->
+  <div class="overlay" id="overlay-perfil">
+    <div class="modal" style="max-width: 500px;">
+      <h2>Mi Perfil Scout</h2>
+      <p style="color: var(--gris-medio); font-size: 0.9rem; text-align: center; margin-bottom: 1rem;">
+        Completá tu información scout
+      </p>
+      <div class="form-group">
+        <label for="prof-recomendaciones">Mis Recomendaciones</label>
+        <textarea id="prof-recomendaciones" placeholder="¿Qué recomendaciones querés dejar para el grupo?" style="min-height: 100px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="prof-frases">Frases que me marcaron</label>
+        <textarea id="prof-frases" placeholder="Frases o lemas que te inspiraron en scout..." style="min-height: 100px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="prof-scout">¿Qué es scout para ti?</label>
+        <textarea id="prof-scout" placeholder="Tu reflexión personal sobre el movimiento scout..." style="min-height: 120px;"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" id="btn-cancelar-perfil">Cerrar</button>
+        <button class="btn-publicar" id="btn-guardar-perfil">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODAL ADMIN USUARIOS ═══════════════ -->
+  <div class="overlay" id="overlay-admin">
+    <div class="modal" style="max-width: 900px; max-height: 80vh; overflow: auto;">
+      <h2>Usuarios registrados</h2>
+      <p style="color: var(--gris-medio); font-size: 0.9rem; text-align: center; margin-bottom: 1rem;">
+        Lista de personas registradas con su perfil completo y respuestas scout
+      </p>
+      <div id="admin-usuarios-list" style="display: flex; flex-direction: column; gap: 12px; margin-top: 0.5rem;"></div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" id="btn-cancelar-admin">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODAL COMUNICADOS ═══════════════ -->
+  <div class="overlay" id="overlay-comunicados">
+    <div class="modal" style="max-width: 700px;">
+      <h2>Editar comunicados</h2>
+      <p style="color: var(--gris-medio); font-size: 0.9rem; text-align: center; margin-bottom: 1rem;">
+        Actualizá los textos que aparecen en la sidebar de crónicas.
+      </p>
+      <div class="form-group">
+        <div id="com-blocks" style="display:flex;flex-direction:column;gap:8px; margin-bottom:8px;">
+          <!-- filas de bloques se insertan aquí -->
+        </div>
+        <button id="btn-add-block" class="nav-btn-nueva" style="background:#2E7D32; color:white; padding:8px 12px; border-radius:6px; border:none;">Agregar bloque</button>
+        <small style="display:block; margin-top:8px; color:var(--gris-medio);">Usá el título para identificar el bloque. Para citas, escribí <strong>texto|cita</strong> en el contenido.</small>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" id="btn-cancelar-comunicados">Cancelar</button>
+        <button class="btn-publicar" id="btn-guardar-comunicados">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODAL CRÓNICA ═══════════════ -->
+
+  <div class="overlay" id="overlay-cronica">
+    <div class="modal">
+      <h2>Redactar nueva crónica</h2>
+      <div class="form-group">
+        <label for="f-titulo">Título</label>
+        <input id="f-titulo" type="text" placeholder="Ej: Gran Campamento de Invierno..." />
+      </div>
+      <div class="form-group">
+        <label for="f-rama">Rama</label>
+        <select id="f-rama">
+          <option value="">— Seleccioná una rama —</option>
+          <option>Manada</option>
+          <option>Tropa</option>
+          <option>Raiders</option>
+          <option>Clan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="f-contenido">Contenido</label>
+        <textarea id="f-contenido" placeholder="Escribí el relato de la actividad..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="f-imagen">Imagen (opcional)</label>
+        <input id="f-imagen" type="file" accept="image/*" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" id="btn-cancelar-cronica">Cancelar</button>
+        <button class="btn-publicar" id="btn-guardar-cronica">Publicar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODAL QR ═══════════════ -->
+  <div class="overlay" id="overlay-qr">
+    <div class="modal" style="align-items: center; text-align: center; max-width: 400px;">
+      <h2 style="border-bottom: none; padding-bottom: 0;">Código QR</h2>
+      <p style="font-family: var(--sans); color: var(--gris-medio); font-size: 0.9rem; margin-top: 0;">Escanea este
+        código para entrar desde el celular</p>
+      <div style="margin: 1.5rem 0;">
+        <img id="qr-img" src="" alt="Código QR"
+          style="border: 4px solid white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 200px; height: 200px; display: none;"
+          onload="this.style.display='block'" />
+      </div>
+      <div class="modal-footer" style="justify-content: center; width: 100%; border-top: none;">
+        <button class="btn-cancelar" id="btn-cerrar-qr">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODAL EVENTO ═══════════════ -->
+  <div class="overlay modal-evento" id="overlay-evento">
+    <div class="modal">
+      <h2>Agregar evento</h2>
+      <div class="form-group">
+        <label for="ev-titulo">Título del evento</label>
+        <input id="ev-titulo" type="text" placeholder="Ej: Campamento de primavera..." />
+      </div>
+      <div class="form-group">
+        <label for="ev-fecha">Fecha</label>
+        <input id="ev-fecha" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="ev-lugar">Lugar</label>
+        <input id="ev-lugar" type="text" placeholder="Ej: Sede del grupo..." />
+      </div>
+      <div class="form-group">
+        <label for="ev-rama">Rama</label>
+        <select id="ev-rama">
+          <option value="">— Todas las ramas —</option>
+          <option>Manada</option>
+          <option>Tropa</option>
+          <option>Raiders</option>
+          <option>Clan</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" id="btn-cancelar-evento">Cancelar</button>
+        <button class="btn-publicar" id="btn-guardar-evento">Guardar evento</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <footer>
+    <strong>Diario San José</strong> &mdash; La voz del Movimiento Scout &mdash; &copy; 2026<br>
+    <button id="btn-mostrar-qr"
+      style="margin-top: 15px; background: none; border: 1px solid #555; color: #ccc; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-family: var(--sans); font-size: 0.75rem; transition: all 0.2s;">Generar
+      Código QR</button>
+  </footer>
+
+  <script>
+    // Seguridad: función global para escapar texto antes de insertarlo en HTML
+    function escapeHtml(unsafe) {
+      return String(unsafe === null || unsafe === undefined ? '' : unsafe)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // --- Mobile Menu ---
+    function toggleMenu(closeOnly = false) {
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('nav-links-menu');
+      if (!btn || !menu) return;
+      if (closeOnly) {
+        btn.classList.remove('active');
+        menu.classList.remove('show');
+        return;
+      }
+      btn.classList.toggle('active');
+      menu.classList.toggle('show');
+    }
+
+    // --- Sticky Navbar Effect ---
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar-main');
+      if (!nav) return;
+      if (window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    const API = '/api';
+    async function leerJsonSeguro(res) {
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        return res.json();
+      }
+      const text = await res.text();
+      throw new Error(text.includes('<!doctype') ? 'La API no respondió con JSON. Revisa la URL del backend.' : text || 'Respuesta inválida del servidor.');
+    }
+    let cronicas = [];
+    let ramaActiva = 'Todas';
+    let seccionActiva = 'cronicas';
+    const defaultComunicados = [
+      { title: 'Misión Scout', content: 'Contribuir a la educación de los jóvenes a través de un sistema de valores basado en la Promesa y la Ley Scout.' },
+      { title: 'Ley Scout', content: 'Mantener siempre el espíritu scout en cada acción, cada día, en todo lugar.|Ley Scout' },
+      { title: 'Ley Scout 2', content: 'El scout es hermano de todo scout del mundo.|Baden Powell' }
+    ];
+
+    // Estructura flexible: { blocks: [ {type,title, content, image}, ... ] }
+    let comunicados = JSON.parse(localStorage.getItem('comunicados_sanjose') || 'null') || { blocks: defaultComunicados };
+
+    // Intentar cargar comunicados desde el perfil de un administrador (campo `que_es_scout`) si no hay localStorage
+    async function loadComunicadosFromServerIfMissing() {
+      try {
+        if (localStorage.getItem('comunicados_sanjose')) return; // ya hay datos locales
+        // obtener lista de usuarios y buscar un admin
+        const res = await fetch(API + '/usuarios');
+        if (!res.ok) return;
+        const usuarios = await res.json();
+        const admin = usuarios.find(u => u.is_admin) || usuarios[0];
+        if (!admin) return;
+        const perfilRes = await fetch(API + '/perfil/' + admin.id);
+        if (!perfilRes.ok) return;
+        const perfil = await perfilRes.json();
+        const raw = (perfil.que_es_scout || '');
+        const marker = '__COMUNICADOS__';
+        if (raw && raw.startsWith(marker)) {
+          const json = raw.slice(marker.length);
+          try {
+            const parsed = JSON.parse(json);
+            if (parsed && parsed.blocks) {
+              comunicados = parsed;
+              localStorage.setItem('comunicados_sanjose', JSON.stringify(comunicados));
+              renderSidebarComunicados();
+            }
+          } catch (e) { /* ignore parse errors */ }
+        }
+      } catch (e) { console.log('No se pudo cargar comunicados del servidor', e.message); }
+    }
+    loadComunicadosFromServerIfMissing();
+    const likedSet = new Set(JSON.parse(localStorage.getItem('liked_sanjose') || '[]'));
+    let galeria = JSON.parse(localStorage.getItem('galeria_sanjose') || '[]');
+    let eventos = JSON.parse(localStorage.getItem('eventos_sanjose') || '[]');
+    let anioGaleria = new Date().getFullYear();
+
+    const toast = document.getElementById('toast');
+
+    function mostrarToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 2800);
+    }
+
+    // ── FECHA HOY ──
+    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const hoy = new Date();
+    document.getElementById('fecha-hoy').textContent =
+      dias[hoy.getDay()].toUpperCase() + ', ' + hoy.getDate() + ' DE ' +
+      meses[hoy.getMonth()].toUpperCase() + ' DE ' + hoy.getFullYear();
+
+    // ── FUNCIONES DE SECCIÓN Y MASTHEAD ──
+    function cambiarSeccion(sec) {
+      seccionActiva = sec;
+      document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`.nav-links button[data-seccion="${sec}"]`);
+      if (btn) btn.classList.add('active');
+
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('visible'));
+      document.getElementById('sec-' + sec).classList.add('visible');
+
+      updateMasthead();
+
+      if (sec === 'cronicas') renderCronicas();
+      if (sec === 'galeria') renderGaleria();
+      if (sec === 'calendario') renderCalendario();
+    }
+
+    function updateMasthead() {
+      const masthead = document.getElementById('masthead');
+      const h1 = masthead.querySelector('h1');
+      const lema = masthead.querySelector('.lema');
+
+      if (seccionActiva === 'cronicas') {
+        h1.textContent = 'Diario San José';
+        lema.textContent = 'La voz del Movimiento Scout';
+      } else if (seccionActiva === 'galeria') {
+        h1.textContent = 'Galería Scout';
+        lema.textContent = 'Recuerdos de nuestras aventuras';
+      } else if (seccionActiva === 'calendario') {
+        h1.textContent = 'Calendario Scout';
+        lema.textContent = 'Eventos y actividades del grupo';
+      }
+
+      masthead.className = 'masthead';
+      if (ramaActiva !== 'Todas') {
+        masthead.classList.add('rama-' + ramaActiva);
+        lema.textContent += ' — ' + ramaActiva;
+      }
+    }
+
+    function parseLeyTexto(valor, fallback) {
+      const cleaned = (valor || fallback || '').split('|');
+      return {
+        text: cleaned[0] || '',
+        cite: cleaned[1] || 'Ley Scout'
+      };
+    }
+
+    function renderSidebarComunicados() {
+      const contenedor = document.getElementById('sidebar-comunicados');
+      if (!contenedor) return;
+
+      const blocks = (comunicados && comunicados.blocks) || defaultComunicados;
+      let html = '';
+      for (const b of blocks) {
+        const type = b.type || 'text';
+        const title = b.title || '';
+        const content = b.content || '';
+        const image = b.image || '';
+
+        // misión sigue prioritaria cuando aparece en el título
+        if (title.toLowerCase().includes('misi')) {
+          html += `\n<div class="sb-bloque">\n  <h3>${escapeHtml(title)}</h3>\n  <div class="mision-box"><strong>${escapeHtml(title)}</strong> ${escapeHtml(content)}</div>\n</div>`;
+          continue;
+        }
+
+        if (type === 'title') {
+          html += `\n<div class="sb-bloque">\n  <h2 style="margin:0 0 6px 0">${escapeHtml(content || title)}</h2>\n</div>`;
+          continue;
+        }
+
+        if (type === 'image' && image) {
+          html += `\n<div class="sb-bloque">\n  <h3>${escapeHtml(title)}</h3>\n  <div style="text-align:center"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" style="max-width:100%;border-radius:8px;"/></div>\n  ${content ? `<div style="font-size:0.9rem;color:var(--gris-medio);margin-top:6px">${escapeHtml(content)}</div>` : ''}\n</div>`;
+          continue;
+        }
+
+        if (type === 'list') {
+          const items = (content || '').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+          html += `\n<div class="sb-bloque">\n  <h3>${escapeHtml(title)}</h3>\n  <ul style="margin:6px 0 0 18px;">${items.map(i=>`<li>${escapeHtml(i)}</li>`).join('')}</ul>\n</div>`;
+          continue;
+        }
+
+        if (type === 'quote' || content.includes('|')) {
+          const p = parseLeyTexto(content, content);
+          html += `\n<div class="sb-bloque">\n  <h3>${escapeHtml(title)}</h3>\n  <div class="sb-quote">"${escapeHtml(p.text)}"<cite>— ${escapeHtml(p.cite)}</cite></div>\n</div>`;
+          continue;
+        }
+
+        // default: texto
+        html += `\n<div class="sb-bloque">\n  <h3>${escapeHtml(title)}</h3>\n  <div style="font-size:0.95rem; color:var(--gris-medio)">${escapeHtml(content)}</div>\n</div>`;
+      }
+
+      // Ramas fijo al final
+      html += `\n<div class="sb-bloque">\n  <h3>Ramas</h3>\n  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.83rem;">\n    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:#E65100"></span>Manada</div>\n    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:#2E7D32"></span>Tropa</div>\n    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:#6A1B9A"></span>Raiders</div>\n    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:#B71C1C"></span>Clan</div>\n  </div>\n</div>`;
+
+      contenedor.innerHTML = html;
+    }
+
+    // ── NAV PRINCIPAL ──
+    document.querySelector('.nav-links').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-seccion]');
+      if (!btn) return;
+      cambiarSeccion(btn.dataset.seccion);
+      toggleMenu(true); // Cerrar menú
+    });
+
+    // ── RAMAS NAV ──
+    document.getElementById('rama-nav').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-rama]');
+      if (!btn) return;
+      document.querySelectorAll('#rama-nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ramaActiva = btn.dataset.rama;
+
+      updateMasthead();
+
+      if (seccionActiva === 'cronicas') renderCronicas();
+      if (seccionActiva === 'galeria') renderGaleria();
+      if (seccionActiva === 'calendario') renderCalendario();
+    });
+
+    // ══════════════════════════════════
+    // CRÓNICAS
+    // ══════════════════════════════════
+    function badgeClass(rama) {
+      return 'badge-' + (rama || 'default');
+    }
+
+    function ramaEmoji(rama) {
+      return { Manada: '🐺', Tropa: '⛺', Raiders: '🌿', Clan: '🏔️' }[rama] || '⚜';
+    }
+
+    function renderCronicas() {
+      const el = document.getElementById('articulos');
+      const estado = document.getElementById('estado');
+      const filtradas = ramaActiva === 'Todas' ? cronicas : cronicas.filter(c => c.rama === ramaActiva);
+
+      if (filtradas.length === 0) {
+        el.innerHTML = '';
+        estado.textContent = 'No hay crónicas para esta sección.';
+        estado.style.display = 'block';
+        return;
+      }
+
+      estado.style.display = 'none';
+      el.innerHTML = filtradas.map((c, i) => {
+        const liked = likedSet.has(c.id);
+        const size = i === 0 && ramaActiva === 'Todas' ? '2rem' : '1.5rem';
+        const imgHtml = c.imagen_url
+          ? `<img class="art-img" src="${escapeHtml(c.imagen_url)}" alt="${escapeHtml(c.titulo)}"/>`
+          : `<div class="art-img-placeholder">${ramaEmoji(c.rama)}</div>`;
+        return `<article class="articulo" data-id="${c.id}" style="animation-delay: ${i * 0.05}s">
+      <div>
+        <div>
+          <span class="articulo-badge ${badgeClass(c.rama)}">${escapeHtml(c.rama || '')}</span>
+          <span class="articulo-fecha">${escapeHtml(c.fecha || '')}</span>
+        </div>
+        <div class="articulo-titulo" style="font-size:${size}">${escapeHtml(c.titulo)}</div>
+        <div class="articulo-texto"><p>${escapeHtml(c.contenido).replace(/\n/g,'<br>')}</p></div>
+        <div class="articulo-footer">
+          <span class="articulo-autor">Por ${escapeHtml(c.autor || 'Redacción San José')}</span>
+          <button class="btn-like ${liked ? 'liked' : ''}" data-id="${c.id}">&#9829; ${c.likes}</button>
+        </div>
+      </div>
+      ${imgHtml}
+    </article>`;
+      }).join('');
+
+      el.querySelectorAll('.btn-like').forEach(btn => {
+        btn.addEventListener('click', () => darLike(parseInt(btn.dataset.id)));
+      });
+    }
+
+    async function cargarCronicas() {
+      try {
+        const res = await fetch(API + '/cronicas', { credentials: 'include' });
+        cronicas = await res.json();
+        const nums = cronicas.map(c => c.id);
+        if (nums.length > 0) document.getElementById('edicion-num').textContent = 'Edición Digital N° ' + Math.max(...nums);
+        renderCronicas();
+      } catch (e) {
+        document.getElementById('estado').textContent = 'No se pudo conectar con Flask en localhost:5000.';
+      }
+    }
+
+    async function darLike(id) {
+      if (likedSet.has(id)) return;
+      try {
+        const res = await fetch(API + '/cronicas/' + id + '/like', { method: 'POST' });
+        const data = await res.json();
+        likedSet.add(id);
+        localStorage.setItem('liked_sanjose', JSON.stringify([...likedSet]));
+        const c = cronicas.find(x => x.id === id);
+        if (c) c.likes = data.likes;
+        renderCronicas();
+      } catch (e) { mostrarToast('Error al registrar el like.'); }
+    }
+
+    // Modal crónica
+    document.getElementById('btn-cancelar-cronica').addEventListener('click', () => cerrarModalCronica());
+    document.getElementById('overlay-cronica').addEventListener('click', e => { if (e.target === document.getElementById('overlay-cronica')) cerrarModalCronica(); });
+
+    function cerrarModalCronica() {
+      document.getElementById('overlay-cronica').classList.remove('open');
+      ['f-titulo', 'f-contenido'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-rama').value = '';
+      document.getElementById('f-imagen').value = '';
+    }
+
+    // ══════════════════════════════════
+    // GALERÍA
+    // ══════════════════════════════════
+    function guardarGaleria() { localStorage.setItem('galeria_sanjose', JSON.stringify(galeria)); }
+
+    function renderGaleria() {
+      const anioActual = new Date().getFullYear();
+      const todosAnios = [];
+      for (let a = anioActual; a >= 2000; a--) todosAnios.push(a);
+
+      const grid = document.getElementById('anios-grid');
+      grid.innerHTML = todosAnios.map(a => {
+        const tiene = galeria.some(f => f.anio === a);
+        return `<button class="anio-btn ${a === anioGaleria ? 'active' : ''} ${!tiene ? 'sin-fotos' : ''}"
+      data-anio="${a}" style="${!tiene ? 'opacity:0.5' : ''}">${a}</button>`;
+      }).join('');
+
+      grid.querySelectorAll('.anio-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          anioGaleria = parseInt(btn.dataset.anio);
+          renderGaleria();
+        });
+      });
+
+      const fotos = galeria.filter(f => f.anio === anioGaleria && (ramaActiva === 'Todas' || f.rama === ramaActiva || !f.rama));
+      document.getElementById('galeria-anio-titulo').textContent = anioGaleria;
+      document.getElementById('galeria-count').textContent = fotos.length > 0 ? '(' + fotos.length + ')' : '';
+
+      const gg = document.getElementById('galeria-grid');
+      if (fotos.length === 0) {
+        gg.innerHTML = '<div class="galeria-vacia">No hay fotos para esta vista.</div>';
+        return;
+      }
+
+      gg.innerHTML = fotos.map((f, i) => `
+    <div class="galeria-card" style="animation-delay: ${i * 0.05}s">
+      <img src="${escapeHtml(f.url)}" alt="${escapeHtml(f.nombre)}" onerror="this.style.display='none'"/>
+      <div class="galeria-card-body">
+        <div class="galeria-card-title">${escapeHtml(f.nombre)}</div>
+        <div class="galeria-card-meta">${escapeHtml(f.fecha)}</div>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    document.getElementById('f-galeria-file').addEventListener('change', e => {
+      if (!usuarioActual || !usuarioActual.is_admin) {
+        mostrarToast('Solo administradores pueden subir fotos');
+        e.target.value = '';
+        return;
+      }
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          galeria.push({
+            url: ev.target.result,
+            nombre: file.name.replace(/\.[^.]+$/, ''),
+            fecha: new Date().toLocaleDateString('es-AR'),
+            anio: new Date().getFullYear(),
+            rama: ramaActiva !== 'Todas' ? ramaActiva : ''
+          });
+          guardarGaleria();
+          renderGaleria();
+        };
+        reader.readAsDataURL(file);
+      });
+      mostrarToast('Foto(s) agregada(s) al álbum.');
+    });
+
+    // ══════════════════════════════════
+    // CALENDARIO
+    // ══════════════════════════════════
+    const coloresRama = { Manada: '#E65100', Tropa: '#2E7D32', Raiders: '#6A1B9A', Clan: '#B71C1C' };
+    const bgRama = { Manada: '#FFF3E0', Tropa: '#E8F5E9', Raiders: '#F3E5F5', Clan: '#FFEBEE' };
+
+    function guardarEventos() { localStorage.setItem('eventos_sanjose', JSON.stringify(eventos)); }
+
+    function renderCalendario() {
+      const hoyTs = new Date(); hoyTs.setHours(0, 0, 0, 0);
+      const futuros = eventos
+        .filter(ev => new Date(ev.fecha + 'T00:00:00') >= hoyTs && (ramaActiva === 'Todas' || ev.rama === ramaActiva || !ev.rama))
+        .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      const pasados = eventos
+        .filter(ev => new Date(ev.fecha + 'T00:00:00') < hoyTs && (ramaActiva === 'Todas' || ev.rama === ramaActiva || !ev.rama))
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      const ordenados = [...futuros, ...pasados];
+
+      const proxBox = document.getElementById('proximo-evento-box');
+      if (futuros.length > 0) {
+        const prox = futuros[0];
+        const fechaProx = new Date(prox.fecha + 'T00:00:00');
+        const diff = Math.ceil((fechaProx - hoyTs) / (1000 * 60 * 60 * 24));
+        proxBox.innerHTML = `<div class="proximo-evento">
+      <div>
+        <div class="pe-label">&#9201; Próximo evento</div>
+        <div class="pe-titulo">${escapeHtml(prox.titulo)}</div>
+        <div class="pe-meta">${fechaProx.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })}${prox.lugar ? ' &#128205; ' + escapeHtml(prox.lugar) : ''}</div>
+      </div>
+      <div class="pe-dias"><div class="num">${diff}</div><div class="label">días</div></div>
+    </div>`;
+      } else {
+        proxBox.innerHTML = '';
+      }
+
+      if (ordenados.length === 0) {
+        document.getElementById('cal-lista').innerHTML = '<p style="text-align:center;font-style:italic;color:var(--gris-medio);font-family:var(--lora);padding:2rem">No hay eventos cargados aún.</p>';
+        return;
+      }
+
+      document.getElementById('cal-lista').innerHTML = ordenados.map((ev, i) => {
+        const fecha = new Date(ev.fecha + 'T00:00:00');
+        const dia = fecha.getDate();
+        const mes = meses[fecha.getMonth()].substring(0, 3).toUpperCase();
+        const color = coloresRama[ev.rama] || '#37474F';
+        const bg = bgRama[ev.rama] || '#ECEFF1';
+        const esPasado = fecha < hoyTs;
+        return `<div class="cal-evento" style="${esPasado ? 'opacity:0.55;' : ''} animation-delay: ${i * 0.05}s">
+      <div class="cal-fecha-box">
+        <div class="dia">${dia}</div>
+        <div class="mes">${mes}</div>
+      </div>
+      <div>
+        <div class="cal-ev-titulo">${escapeHtml(ev.titulo)}</div>
+        <div class="cal-ev-meta">${escapeHtml(ev.lugar || '')}</div>
+      </div>
+      ${ev.rama ? `<span class="cal-ev-rama" style="background:${bg};color:${color}">${escapeHtml(ev.rama)}</span>` : '<span></span>'}
+    </div>`;
+      }).join('');
+    }
+
+    document.getElementById('btn-add-evento').addEventListener('click', () => {
+      if (!usuarioActual || !usuarioActual.is_admin) {
+        mostrarToast('Solo administradores pueden agregar eventos');
+        return;
+      }
+      document.getElementById('overlay-evento').classList.add('open');
+    });
+    document.getElementById('btn-cancelar-evento').addEventListener('click', () => cerrarModalEvento());
+    document.getElementById('overlay-evento').addEventListener('click', e => { if (e.target === document.getElementById('overlay-evento')) cerrarModalEvento(); });
+
+    function cerrarModalEvento() {
+      document.getElementById('overlay-evento').classList.remove('open');
+      ['ev-titulo', 'ev-fecha', 'ev-lugar'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('ev-rama').value = '';
+    }
+
+    document.getElementById('btn-guardar-evento').addEventListener('click', () => {
+      const titulo = document.getElementById('ev-titulo').value.trim();
+      const fecha = document.getElementById('ev-fecha').value;
+      const lugar = document.getElementById('ev-lugar').value.trim();
+      const rama = document.getElementById('ev-rama').value;
+      if (!titulo || !fecha) { mostrarToast('Completá título y fecha.'); return; }
+      eventos.push({ titulo, fecha, lugar, rama });
+      guardarEventos();
+      cerrarModalEvento();
+      mostrarToast('Evento agregado.');
+      renderCalendario();
+    });
+    function irSeccion(sec) {
+      cambiarSeccion(sec);
+    }
+
+    // ── CÓDIGO QR ──
+    document.getElementById('btn-mostrar-qr').addEventListener('click', () => {
+      const urlActual = encodeURIComponent(window.location.href.split('#')[0]);
+      document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${urlActual}`;
+      document.getElementById('overlay-qr').classList.add('open');
+    });
+
+    document.getElementById('btn-cerrar-qr').addEventListener('click', () => {
+      document.getElementById('overlay-qr').classList.remove('open');
+    });
+
+    document.getElementById('overlay-qr').addEventListener('click', e => {
+      if (e.target === document.getElementById('overlay-qr')) {
+        document.getElementById('overlay-qr').classList.remove('open');
+      }
+    });
+
+    // ── INIT ──
+    // Verificar usuario actual y actualizar navbar
+    async function verificarSesion() {
+      try {
+        const res = await fetch(API + '/usuario-actual', { credentials: 'include' });
+        const data = await res.json();
+        if (data.user) {
+          // Usuario logueado
+          usuarioActual = data.user;
+          document.getElementById('btn-perfil').style.display = 'block';
+          document.getElementById('btn-logout').style.display = 'block';
+          if (usuarioActual.is_admin) {
+            document.getElementById('btn-nueva').style.display = 'block';
+            document.getElementById('btn-admin-panel').style.display = 'block';
+            document.getElementById('btn-editar-comunicados').style.display = 'block';
+          } else {
+            document.getElementById('btn-nueva').style.display = 'none';
+            document.getElementById('btn-admin-panel').style.display = 'none';
+            document.getElementById('btn-editar-comunicados').style.display = 'none';
+          }
+        } else {
+          // No hay usuario logueado
+          document.getElementById('btn-nueva').style.display = 'block';
+          document.getElementById('btn-perfil').style.display = 'none';
+          document.getElementById('btn-logout').style.display = 'none';
+          document.getElementById('btn-admin-panel').style.display = 'none';
+          document.getElementById('btn-editar-comunicados').style.display = 'none';
+        }
+      } catch (e) {
+        console.log('No se pudo verificar sesión');
+      }
+      // Actualizar comportamiento del botón
+      actualizarBtnNueva();
+    }
+
+    // ═══════════════════════════════════
+    // AUTENTICACIÓN Y REGISTRO
+    // ═══════════════════════════════════
+    let usuarioActual = null;
+
+    function mostrarPanelAdmin() {
+      document.getElementById('overlay-admin').classList.add('open');
+      cargarPanelAdmin();
+    }
+
+    function ocultarPanelAdmin() {
+      document.getElementById('overlay-admin').classList.remove('open');
+    }
+    
+
+    function abrirEditorComunicados() {
+      // Renderizar filas dinámicas en el modal según comunicados.blocks
+      renderEditorBlocks();
+      document.getElementById('overlay-comunicados').classList.add('open');
+    }
+
+    function renderEditorBlocks() {
+      const container = document.getElementById('com-blocks');
+      if (!container) return;
+      const blocks = (comunicados && comunicados.blocks) || defaultComunicados;
+      container.innerHTML = '';
+      blocks.forEach((b, i) => addBlockEditorRow(container, b.title, b.content, i, b.type, b.image || ''));
+    }
+
+    function addBlockEditorRow(container, title = '', content = '', idx, type = 'text', imageUrl = '') {
+      const i = typeof idx === 'number' ? idx : Date.now();
+      const row = document.createElement('div');
+      row.className = 'com-block';
+      row.dataset.idx = i;
+      row.style = 'border:1px solid var(--gris-claro); padding:8px; margin-bottom:8px; border-radius:6px;';
+      row.innerHTML = `
+        <div style="display:flex;gap:8px;align-items:center;">
+          <select class="com-type" style="width:140px;">
+            <option value="text" ${type==='text'?'selected':''}>Texto</option>
+            <option value="quote" ${type==='quote'?'selected':''}>Cita</option>
+            <option value="image" ${type==='image'?'selected':''}>Imagen</option>
+            <option value="list" ${type==='list'?'selected':''}>Lista</option>
+            <option value="title" ${type==='title'?'selected':''}>Título</option>
+          </select>
+          <input class="com-title" placeholder="Título (opcional)" value="${escapeHtml(title)}" style="flex:1;" />
+          <div style="display:flex;gap:6px;">
+            <button class="btn-move-up" title="Subir" style="padding:6px 8px;border-radius:6px;border:none;">↑</button>
+            <button class="btn-move-down" title="Bajar" style="padding:6px 8px;border-radius:6px;border:none;">↓</button>
+            <button class="btn-cancelar btn-remove-block" title="Quitar" style="background:#b71c1c;padding:6px 8px;color:white;border-radius:6px;border:none;">Eliminar</button>
+          </div>
+        </div>
+        <div style="margin-top:8px;">
+          <textarea class="com-content" rows="4" placeholder="Contenido (usa salto de línea para listas o 'texto|cita' para citas)">${escapeHtml(content)}</textarea>
+        </div>
+        <div style="margin-top:6px; display:none;" class="com-image-row">
+          <input class="com-image-url" placeholder="URL de la imagen (opcional)" value="${escapeHtml(imageUrl)}" style="width:100%;" />
+        </div>
+      `;
+      container.appendChild(row);
+
+      const typeSelect = row.querySelector('.com-type');
+      const imageRow = row.querySelector('.com-image-row');
+      function updateVisibility() {
+        const t = typeSelect.value;
+        imageRow.style.display = t === 'image' ? 'block' : 'none';
+        if (t === 'title') row.querySelector('.com-content').style.display = 'none'; else row.querySelector('.com-content').style.display = 'block';
+      }
+      updateVisibility();
+      typeSelect.addEventListener('change', updateVisibility);
+
+      // attach remove handler
+      row.querySelector('.btn-remove-block').addEventListener('click', () => { row.remove(); });
+
+      // move up / down
+      row.querySelector('.btn-move-up').addEventListener('click', () => {
+        const prev = row.previousElementSibling;
+        if (prev) container.insertBefore(row, prev);
+      });
+      row.querySelector('.btn-move-down').addEventListener('click', () => {
+        const next = row.nextElementSibling;
+        if (next) container.insertBefore(next, row);
+      });
+    }
+
+    // Añadir nuevo bloque desde el modal
+    document.addEventListener('click', e => {
+      if (e.target && e.target.id === 'btn-add-block') {
+        const container = document.getElementById('com-blocks');
+        addBlockEditorRow(container, 'Nuevo bloque', '', Date.now());
+      }
+    });
+
+    function guardarComunicados() {
+      const container = document.getElementById('com-blocks');
+      if (!container) return;
+      const rows = Array.from(container.querySelectorAll('.com-block'));
+      const blocks = rows.map(r => {
+        const type = (r.querySelector('.com-type') || { value: 'text' }).value;
+        const title = (r.querySelector('.com-title') || { value: '' }).value.trim();
+        const content = (r.querySelector('.com-content') || { value: '' }).value.trim();
+        const image = (r.querySelector('.com-image-url') || { value: '' }).value.trim();
+        return { type: type || 'text', title: title || '', content: content || '', image: image || '' };
+      }).filter(b => b.title || b.content || b.image);
+      comunicados = { blocks: blocks.length ? blocks : defaultComunicados };
+      localStorage.setItem('comunicados_sanjose', JSON.stringify(comunicados));
+      renderSidebarComunicados();
+      // Intentar persistir en backend: guardar en el perfil del admin (campo que_es_scout)
+      (async () => {
+        try {
+          if (window.usuarioActual && window.usuarioActual.is_admin && window.usuarioActual.id) {
+            const marker = '__COMUNICADOS__';
+            const payload = { que_es_scout: marker + JSON.stringify(comunicados) };
+            const res = await fetch(API + '/perfil/' + window.usuarioActual.id, {
+              method: 'PUT',
+              credentials: 'include',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+              const txt = await res.text();
+              console.warn('No se pudo guardar comunicados en servidor:', txt);
+              mostrarToast('Guardado local; error al persistir en servidor');
+              return;
+            }
+            mostrarToast('Comunicados guardados en servidor');
+          }
+        } catch (e) { console.log('Error guardando comunicados en server', e.message); }
+      })();
+      document.getElementById('overlay-comunicados').classList.remove('open');
+      mostrarToast('Comunicados actualizados');
+    }
+    function crearCardUsuarioAdmin(usuario) {
+      const perfil = usuario.perfil || {};
+      const recomendaciones = escapeHtml(perfil.recomendaciones || '—');
+      const frases = escapeHtml(perfil.frases || '—');
+      const scout = formatearPerfilTexto(perfil.que_es_scout || '—');
+
+      return `
+        <div style="border: 1px solid #ddd; border-radius: 12px; padding: 12px; background: #fff;">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 8px;">
+            <strong style="font-size: 1rem;">${escapeHtml(usuario.username)}</strong>
+            <span style="font-size: 0.85rem; color: var(--gris-medio);">${usuario.is_admin ? 'Administrador' : 'Usuario'}</span>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--gris-medio); margin-bottom: 10px;">Registrado: ${escapeHtml(usuario.fecha_registro || 'Sin fecha')}</div>
+          <div style="display: grid; gap: 8px;">
+            <div><strong>Mis Recomendaciones</strong><div style="margin-top: 4px; white-space: pre-wrap; color: var(--gris);">${recomendaciones}</div></div>
+            <div><strong>Frases que me marcaron</strong><div style="margin-top: 4px; white-space: pre-wrap; color: var(--gris);">${frases}</div></div>
+            <div><strong>¿Qué es scout para ti?</strong><div style="margin-top: 4px; white-space: pre-wrap; color: var(--gris);">${scout}</div></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Handler para botón nueva - se actualiza dinámicamente según autenticación
+    function handleBtnNueva() {
+      if (!usuarioActual) {
+        // No logueado: abrir registro
+        document.getElementById('overlay-registro').classList.add('open');
+      } else if (usuarioActual.is_admin) {
+        // Admin: abrir crónica
+        document.getElementById('overlay-cronica').classList.add('open');
+      } else {
+        // Usuario regular: mostrar mensaje
+        mostrarToast('Solo administradores pueden publicar crónicas');
+      }
+    }
+
+    document.getElementById('btn-nueva').addEventListener('click', handleBtnNueva);
+
+    document.getElementById('btn-cancelar-registro').addEventListener('click', () => {
+      document.getElementById('overlay-registro').classList.remove('open');
+      limpiarRegistro();
+    });
+
+    document.getElementById('overlay-registro').addEventListener('click', e => {
+      if (e.target === document.getElementById('overlay-registro')) {
+        document.getElementById('overlay-registro').classList.remove('open');
+        limpiarRegistro();
+      }
+    });
+
+    function limpiarRegistro() {
+      document.getElementById('reg-username').value = '';
+      document.getElementById('reg-password').value = '';
+    }
+
+    document.getElementById('btn-registrarse').addEventListener('click', async () => {
+      const username = document.getElementById('reg-username').value.trim();
+      const password = document.getElementById('reg-password').value;
+
+      if (!username) {
+        mostrarToast('El nombre de usuario es obligatorio');
+        return;
+      }
+
+      const btn = document.getElementById('btn-registrarse');
+      btn.disabled = true;
+      btn.textContent = 'Registrando...';
+
+      try {
+        const res = await fetch(API + '/registro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username, password: password || null })
+        });
+
+        const data = await leerJsonSeguro(res);
+
+        if (!res.ok) {
+          mostrarToast(data.error || 'Error al registrar');
+          return;
+        }
+
+        // Registro exitoso
+        usuarioActual = data.user;
+        mostrarToast('¡Registrado exitosamente! Bienvenido ' + username);
+        
+        // Cerrar modal de registro y actualizar navbar
+        document.getElementById('overlay-registro').classList.remove('open');
+        limpiarRegistro();
+        verificarSesion();
+        
+        // Abrir modal de perfil automáticamente para que completen sus datos
+        setTimeout(() => {
+          cargarYAbrirPerfil();
+        }, 300);
+
+      } catch (e) {
+        mostrarToast('Error de conexión');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Registrarse';
+      }
+    });
+
+    // ═══════════════════════════════════
+    // PERFIL
+    // ═══════════════════════════════════
+
+    async function cargarYAbrirPerfil() {
+      if (!usuarioActual) return;
+      
+      // Cargar perfil actual
+      try {
+        const res = await fetch(API + '/perfil/' + usuarioActual.id, { credentials: 'include' });
+        if (res.ok) {
+          const perfil = await res.json();
+          document.getElementById('prof-recomendaciones').value = perfil.recomendaciones || '';
+          document.getElementById('prof-frases').value = perfil.frases || '';
+          document.getElementById('prof-scout').value = perfil.que_es_scout || '';
+        }
+      } catch (e) {
+        console.log('Error al cargar perfil');
+      }
+
+      document.getElementById('overlay-perfil').classList.add('open');
+    }
+
+    document.getElementById('btn-perfil').addEventListener('click', cargarYAbrirPerfil);
+
+    async function cargarPanelAdmin() {
+      const container = document.getElementById('admin-usuarios-list');
+
+      try {
+        const res = await fetch(API + '/admin/usuarios', { credentials: 'include' });
+        if (!res.ok) {
+          const err = await leerJsonSeguro(res);
+          throw new Error(err.error || 'No se pudo cargar la lista');
+        }
+
+        const usuarios = await res.json();
+        if (!usuarios.length) {
+          container.innerHTML = '<div style="padding: 1rem; border: 1px dashed #ddd; border-radius: 10px; color: var(--gris-medio);">No hay usuarios registrados aún.</div>';
+          return;
+        }
+
+        container.innerHTML = usuarios.map(crearCardUsuarioAdmin).join('');
+      } catch (e) {
+        container.innerHTML = '<div style="padding: 1rem; border: 1px dashed #ddd; border-radius: 10px; color: #b71c1c;">No se pudo cargar la lista.</div>';
+        mostrarToast(e.message || 'Error al cargar usuarios');
+      }
+    }
+
+    document.getElementById('btn-admin-panel').addEventListener('click', () => {
+      mostrarPanelAdmin();
+    });
+
+    document.getElementById('btn-editar-comunicados').addEventListener('click', () => {
+      abrirEditorComunicados();
+    });
+
+    document.getElementById('btn-cancelar-admin').addEventListener('click', () => {
+      ocultarPanelAdmin();
+    });
+
+    document.getElementById('overlay-admin').addEventListener('click', e => {
+      if (e.target === document.getElementById('overlay-admin')) {
+        ocultarPanelAdmin();
+      }
+    });
+
+    document.getElementById('btn-cancelar-comunicados').addEventListener('click', () => {
+      document.getElementById('overlay-comunicados').classList.remove('open');
+    });
+
+    document.getElementById('overlay-comunicados').addEventListener('click', e => {
+      if (e.target === document.getElementById('overlay-comunicados')) {
+        document.getElementById('overlay-comunicados').classList.remove('open');
+      }
+    });
+
+    document.getElementById('btn-guardar-comunicados').addEventListener('click', guardarComunicados);
+
+    // Exponer funciones en el scope global por seguridad (uso desde consola/tests)
+    try {
+      window.abrirEditorComunicados = abrirEditorComunicados;
+      window.guardarComunicados = guardarComunicados;
+      window.renderEditorBlocks = renderEditorBlocks;
+      window.renderSidebarComunicados = renderSidebarComunicados;
+    } catch (e) { /* no crítico */ }
+
+    document.getElementById('btn-cancelar-perfil').addEventListener('click', () => {
+      document.getElementById('overlay-perfil').classList.remove('open');
+    });
+
+    document.getElementById('overlay-perfil').addEventListener('click', e => {
+      if (e.target === document.getElementById('overlay-perfil')) {
+        document.getElementById('overlay-perfil').classList.remove('open');
+      }
+    });
+
+    document.getElementById('btn-guardar-perfil').addEventListener('click', async () => {
+      if (!usuarioActual) return;
+
+      const recomendaciones = document.getElementById('prof-recomendaciones').value.trim();
+      const frases = document.getElementById('prof-frases').value.trim();
+      const que_es_scout = document.getElementById('prof-scout').value.trim();
+
+      const btn = document.getElementById('btn-guardar-perfil');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      try {
+        const res = await fetch(API + '/perfil/' + usuarioActual.id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ recomendaciones, frases, que_es_scout })
+        });
+
+        if (res.ok) {
+          mostrarToast('Perfil actualizado exitosamente');
+          document.getElementById('overlay-perfil').classList.remove('open');
+        } else {
+          mostrarToast('Error al actualizar perfil');
+        }
+      } catch (e) {
+        mostrarToast('Error de conexión');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Guardar Cambios';
+      }
+    });
+
+    // ═══════════════════════════════════
+    // LOGOUT
+    // ═══════════════════════════════════
+
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      try {
+        await fetch(API + '/logout', { method: 'POST', credentials: 'include' });
+        usuarioActual = null;
+        sessionStorage.clear();
+        mostrarToast('Sesión cerrada');
+        verificarSesion();
+      } catch (e) {
+        console.log('Error al cerrar sesión');
+      }
+    });
+
+    // ═══════════════════════════════════
+    // PROTEGER RUTAS EDITABLES
+    // ═══════════════════════════════════
+
+    // Actualizar el texto y comportamiento del botón según autenticación
+    function actualizarBtnNueva() {
+      const btnNueva = document.getElementById('btn-nueva');
+      if (!usuarioActual) {
+        // No logueado: mostrar "Registrarse"
+        btnNueva.textContent = 'Registrarse';
+        btnNueva.disabled = false;
+        btnNueva.style.opacity = '1';
+        btnNueva.style.cursor = 'pointer';
+      } else if (usuarioActual.is_admin) {
+        // Admin: mostrar "Nueva crónica"
+        btnNueva.textContent = 'Nueva crónica';
+        btnNueva.disabled = false;
+        btnNueva.style.opacity = '1';
+        btnNueva.style.cursor = 'pointer';
+      } else {
+        // Usuario regular: deshabilitado
+        btnNueva.textContent = 'Nueva crónica';
+        btnNueva.disabled = true;
+        btnNueva.style.opacity = '0.5';
+        btnNueva.style.cursor = 'not-allowed';
+      }
+    }
+
+    // Proteger el envío de crónicas
+    document.getElementById('btn-guardar-cronica').addEventListener('click', async () => {
+      if (!usuarioActual || !usuarioActual.is_admin) {
+        mostrarToast('No tienes permisos para publicar');
+        return;
+      }
+
+      const titulo = document.getElementById('f-titulo').value.trim();
+      const rama = document.getElementById('f-rama').value;
+      const contenido = document.getElementById('f-contenido').value.trim();
+      const file = document.getElementById('f-imagen').files[0];
+      if (!titulo || !rama || !contenido) { mostrarToast('Completá todos los campos.'); return; }
+      const btn = document.getElementById('btn-guardar-cronica');
+      btn.disabled = true; btn.textContent = 'Publicando...';
+      const fd = new FormData();
+      fd.append('titulo', titulo); fd.append('rama', rama); fd.append('contenido', contenido);
+      if (file) fd.append('file', file);
+      try {
+        const res = await fetch(API + '/cronicas', { method: 'POST', credentials: 'include', body: fd });
+        if (!res.ok) {
+          const err = await leerJsonSeguro(res);
+          throw new Error(err.error || 'Error al publicar');
+        }
+        cerrarModalCronica(); mostrarToast('¡Crónica publicada!'); await cargarCronicas();
+      } catch (e) { mostrarToast(e.message || 'Error al publicar.'); }
+      finally { btn.disabled = false; btn.textContent = 'Publicar'; }
+    });
+
+    renderSidebarComunicados();
+    cargarCronicas();
+
+    renderGaleria();
+    
+    verificarSesion();
+  </script>
+
+</body>
+
+</html>
