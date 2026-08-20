@@ -23,7 +23,16 @@ UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, '..', 'instance', 'diario_scout.db')
+local_sqlite_db = 'sqlite:///' + os.path.join(basedir, '..', 'instance', 'diario_scout.db')
+database_url = os.getenv('DATABASE_URL')
+
+if database_url:
+    # Render suele enviar postgres://...; SQLAlchemy necesita postgresql://...
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = local_sqlite_db
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
